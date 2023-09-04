@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from app.user import *
+from app1.user import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
