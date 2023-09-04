@@ -2,16 +2,17 @@ import traceback
 import json
 from django.http import HttpResponse
 from django.core.serializers.json import DjangoJSONEncoder
-from settings import *
+from django.conf import settings
 from django.db import connection
 import pytz
 import datetime
 
 # ene debug uyed ajillah yostoi
 def userListView(request):
+    print("columns")
     myCon = connectDB()
     userCursor = myCon.cursor()
-    userCursor.execute('SELECT * FROM "f_user" ORDER BY id ASC')
+    userCursor.execute('SELECT * FROM "t_user" ORDER BY id ASC')
     columns = userCursor.description
     response = [{columns[index][0]: column for index,
                  column in enumerate(value)} for value in userCursor.fetchall()]
@@ -38,8 +39,8 @@ def userLoginView(request):
     try:
         myCon = connectDB()
         userCursor = myCon.cursor()
-        userCursor.execute("SELECT \"id\",\"userName\",\"firstName\",\"lastName\",\"email\" "
-                           " FROM f_user"
+        userCursor.execute("SELECT \"id\",\"name\",\"email\" "
+                           " FROM t_user"
                            " WHERE "
                            " deldate IS NULL AND "
                            " pass = %s AND "
