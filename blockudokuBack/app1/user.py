@@ -2,14 +2,14 @@ import traceback
 import json
 from django.http import HttpResponse
 from django.core.serializers.json import DjangoJSONEncoder
-from django.conf import settings
+from blockudokuBack.settings import *
 from django.db import connection
 import pytz
 import datetime
 
 # ene debug uyed ajillah yostoi
 def userListView(request):
-    print("columns")
+    print("ffff")
     myCon = connectDB()
     userCursor = myCon.cursor()
     userCursor.execute('SELECT * FROM "t_user" ORDER BY id ASC')
@@ -18,7 +18,6 @@ def userListView(request):
                  column in enumerate(value)} for value in userCursor.fetchall()]
     userCursor.close()
     disconnectDB(myCon)
-# Convert timezone-aware time objects to timezone-naive time objects
     for item in response:
         if 'created_at' in item:
             item['created_at'] = item['created_at'].astimezone(
